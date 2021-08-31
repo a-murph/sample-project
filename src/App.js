@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    Redirect
+} from 'react-router-dom';
+import styled from 'styled-components';
+import Page from './pages/Page';
+
+const NavBar = styled.nav`
+    ul {
+        display: flex;
+        flex-direction: row;
+        li {
+            list-style-type: none;
+            padding: 10px 25px;
+            a {
+                text-decoration: none;
+                color: #000;
+            }
+        }
+    }
+`;
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Router>
+            <NavBar>
+                <ul>
+                    <li>
+                        <Link to="/page/1">Page 1</Link>
+                    </li>
+                    <li>
+                        <Link to="/page/2">Page 2</Link>
+                    </li>
+                </ul>
+            </NavBar>
+            <Switch>
+                <Route exact path="/">
+                    <Redirect to="/page/1" />
+                </Route>
+                <Route path="/page/:pageId" key={window.location.pathname}>
+                    <Page />
+                </Route>
+            </Switch>
+        </Router>
+    );
 }
 
 export default App;
